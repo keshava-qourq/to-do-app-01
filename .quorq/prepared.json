@@ -1,0 +1,47 @@
+{
+  "key": {
+    "app_design_id": "ba67b646-29d7-4c1c-97d6-82ecf18b8fc7",
+    "app_design_version": 1,
+    "architecture_document_id": "759e0589-f4e3-45af-bcf3-27666aae7f1d",
+    "architecture_version": 1
+  },
+  "outcome": "prepared",
+  "packages": [
+    {
+      "ecosystem": "pypi",
+      "installed_version": "25.1.0",
+      "name": "argon2-cffi",
+      "status": "installed",
+      "version": ""
+    },
+    {
+      "ecosystem": "pypi",
+      "installed_version": "2.3.0",
+      "name": "email-validator",
+      "status": "installed",
+      "version": ""
+    },
+    {
+      "ecosystem": "pypi",
+      "installed_version": "2.16.2",
+      "name": "pydantic-settings",
+      "status": "installed",
+      "version": ""
+    },
+    {
+      "ecosystem": "pypi",
+      "installed_version": "2026.6",
+      "name": "tzdata",
+      "status": "installed",
+      "version": ""
+    },
+    {
+      "ecosystem": "npm",
+      "error": "already provided by the scaffold",
+      "name": "react-router",
+      "status": "skipped",
+      "version": ""
+    }
+  ],
+  "prepared_by_run": "ac810726-af1b-4fb4-8d70-129fc7f0b1b1"
+}
