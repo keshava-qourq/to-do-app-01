@@ -19,13 +19,13 @@ def upgrade() -> None:
         sa.Column("id", sa.Uuid(), primary_key=True),
         sa.Column("email", sa.String(320), nullable=False, unique=True),
         sa.Column("password_hash", sa.Text(), nullable=False),
-        sa.Column("timezone", sa.String(64), nullable=False),
+        sa.Column("timezone", sa.String(64), nullable=False, server_default="UTC"),
         sa.Column(
             "created_at", sa.DateTime(timezone=True), server_default=sa.func.now(), nullable=False
         ),
     )
     op.create_table(
-        "sessions",
+        "auth_sessions",
         sa.Column("id", sa.Uuid(), primary_key=True),
         sa.Column(
             "user_id", sa.Uuid(), sa.ForeignKey("users.id", ondelete="CASCADE"), nullable=False
@@ -35,8 +35,9 @@ def upgrade() -> None:
             "created_at", sa.DateTime(timezone=True), server_default=sa.func.now(), nullable=False
         ),
         sa.Column("expires_at", sa.DateTime(timezone=True), nullable=False),
+        sa.Column("revoked_at", sa.DateTime(timezone=True), nullable=True),
     )
-    op.create_index("ix_sessions_user_id", "sessions", ["user_id"])
+    op.create_index("ix_auth_sessions_user_id", "auth_sessions", ["user_id"])
     op.create_table(
         "habits",
         sa.Column("id", sa.Uuid(), primary_key=True),
@@ -56,11 +57,8 @@ def upgrade() -> None:
         sa.Column(
             "habit_id", sa.Uuid(), sa.ForeignKey("habits.id", ondelete="CASCADE"), nullable=False
         ),
-        sa.Column("done_on", sa.Date(), nullable=False),
-        sa.Column(
-            "created_at", sa.DateTime(timezone=True), server_default=sa.func.now(), nullable=False
-        ),
-        sa.UniqueConstraint("habit_id", "done_on", name="uq_completions_habit_day"),
+        sa.Column("day", sa.Date(), nullable=False),
+        sa.UniqueConstraint("habit_id", "day", name="uq_completions_habit_day"),
     )
 
 
@@ -68,6 +66,6 @@ def downgrade() -> None:
     op.drop_table("completions")
     op.drop_index("ix_habits_user_id", table_name="habits")
     op.drop_table("habits")
-    op.drop_index("ix_sessions_user_id", table_name="sessions")
-    op.drop_table("sessions")
+    op.drop_index("ix_auth_sessions_user_id", table_name="auth_sessions")
+    op.drop_table("auth_sessions")
     op.drop_table("users")

@@ -32,12 +32,12 @@ class User(Base):
     # Stored lowercase.
     email: Mapped[str] = mapped_column(String(320), unique=True)
     password_hash: Mapped[str] = mapped_column(Text)
-    timezone: Mapped[str] = mapped_column(String(64))
+    timezone: Mapped[str] = mapped_column(String(64), server_default="UTC", default="UTC")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
 class AuthSession(Base):
-    __tablename__ = "sessions"
+    __tablename__ = "auth_sessions"
 
     id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
     user_id: Mapped[uuid.UUID] = mapped_column(
@@ -47,6 +47,7 @@ class AuthSession(Base):
     token_hash: Mapped[str] = mapped_column(String(64), unique=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
 
 class Habit(Base):
@@ -63,13 +64,12 @@ class Habit(Base):
 
 class Completion(Base):
     __tablename__ = "completions"
-    __table_args__ = (UniqueConstraint("habit_id", "done_on", name="uq_completions_habit_day"),)
+    __table_args__ = (UniqueConstraint("habit_id", "day", name="uq_completions_habit_day"),)
 
     id: Mapped[int] = mapped_column(BigInteger, Identity(), primary_key=True)
     habit_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("habits.id", ondelete="CASCADE"))
     # The user's local calendar day.
-    done_on: Mapped[date] = mapped_column(Date)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    day: Mapped[date] = mapped_column(Date)
 
 
 __all__ = ["AuthSession", "Base", "Completion", "Habit", "User"]

@@ -9,9 +9,11 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app import models  # noqa: F401 -- imported so the tables register on Base.metadata
 from app.bootstrap import seed_bootstrap_admin
-from app.config import get_settings
 from app.database import get_sessionmaker
 from app.migrate import upgrade_to_head
+from app.routers.auth import router as auth_router
+from app.routers.habits import router as habits_router
+from app.settings import get_settings
 
 
 @asynccontextmanager
@@ -49,6 +51,10 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["Authorization", "Content-Type"],
 )
+
+
+app.include_router(auth_router)
+app.include_router(habits_router)
 
 
 @app.get("/health")

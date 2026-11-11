@@ -1,5 +1,7 @@
-import { NavLink, Navigate, Outlet, Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { NavLink, Navigate, Outlet, Route, Routes, useNavigate } from "react-router-dom";
 
+import { getSessionToken, setUnauthorizedHandler } from "@/lib/api";
 import { Icons } from "@/lib/icons";
 import SignUp from "@/screens/SignUp";
 import SignIn from "@/screens/SignIn";
@@ -44,11 +46,23 @@ function AppShellLayout() {
   );
 }
 
+function RequireAuth() {
+  if (!getSessionToken()) return <Navigate to="/sign-in" replace />;
+  return <Outlet />;
+}
+
 export default function App() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    setUnauthorizedHandler(() => navigate("/sign-in", { replace: true }));
+    return () => setUnauthorizedHandler(null);
+  }, [navigate]);
   return (
     <Routes>
-      <Route element={<AppShellLayout />}>
-        <Route path="/today" element={<Today />} />
+      <Route element={<RequireAuth />}>
+        <Route element={<AppShellLayout />}>
+          <Route path="/today" element={<Today />} />
+        </Route>
       </Route>
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/sign-in" element={<SignIn />} />
