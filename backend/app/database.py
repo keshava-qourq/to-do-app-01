@@ -1,35 +1,37 @@
 """Engine, session factory and the request-scoped session dependency.
 
-SQLite by default so a fresh clone runs with nothing but `pip install -r
-requirements.txt` -- the approved architecture may name Postgres or MySQL, but
-naming one is not the same as having one, and a scaffold that cannot start
-without a database server is a scaffold nobody runs. Point `DATABASE_URL` at
-the real thing when it exists; nothing else has to change.
+PostgreSQL only: `DATABASE_URL` is a required setting. The engine is built on first
+use, not at import, so importing the application never opens a connection or needs
+the environment. The schema changes only through Alembic migrations (backend/migrations).
 """
 
-import os
 from collections.abc import Iterator
+from functools import lru_cache
 
 from sqlalchemy import create_engine
+from sqlalchemy.engine import Engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./app.db")
+from app.config import get_settings
 
-# SQLite rejects a connection made on one thread and used on another, which is
-# exactly what happens when FastAPI runs a sync dependency in its threadpool.
-_connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
 
-engine = create_engine(DATABASE_URL, connect_args=_connect_args, future=True)
-SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
+@lru_cache
+def get_engine() -> Engine:
+    return create_engine(get_settings().database_url, pool_pre_ping=True, future=True)
+
+
+@lru_cache
+def get_sessionmaker() -> sessionmaker[Session]:
+    return sessionmaker(bind=get_engine(), autoflush=False, expire_on_commit=False)
 
 
 class Base(DeclarativeBase):
-    """Declarative base that every generated model inherits."""
+    """Declarative base that every model inherits."""
 
 
 def get_db() -> Iterator[Session]:
     """One session per request, closed even when the handler raises."""
-    session = SessionLocal()
+    session = get_sessionmaker()()
     try:
         yield session
     finally:
