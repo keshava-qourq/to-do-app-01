@@ -7,7 +7,12 @@ Pushes to `main` run `.github/workflows/deploy.yml`, which builds the API image 
 <!-- sdlc:auto:end how-it-deploys -->
 
 <!-- sdlc:auto:start environments -->
-_No environments recorded._
+| Name | Service | Runtime | Scaling | Environment |
+|---|---|---|---|---|
+| spa_hosting | AWS S3 + CloudFront (SPA origin only) | Static React 19 build with VITE_API_BASE_URL set at build time | Managed CDN | dev |
+| api_service | AWS App Runner (single container) | FastAPI 0.115 container served by uvicorn, on its own HTTPS origin | 1 instance, max 2 | dev |
+| db | Amazon RDS for PostgreSQL | PostgreSQL 16, smallest burstable instance, storage encrypted, automated backups | Single-AZ, vertical only | dev |
+| secrets | AWS Secrets Manager | DATABASE_URL, SESSION_SECRET | Managed | dev |
 <!-- sdlc:auto:end environments -->
 
 <!-- sdlc:auto:start live -->
@@ -15,5 +20,14 @@ _Not deployed yet._
 <!-- sdlc:auto:end live -->
 
 <!-- sdlc:auto:start topology -->
-_No deployment topology recorded._
+```mermaid
+graph LR
+  n_spa_hosting["spa_hosting<br/>AWS S3 + CloudFront (SPA origin only)"]
+  n_api_service["api_service<br/>AWS App Runner (single container)"]
+  n_db["db<br/>Amazon RDS for PostgreSQL"]
+  n_secrets["secrets<br/>AWS Secrets Manager"]
+  n_spa_hosting -->|"HTTPS (browser fetch with Bearer token, CORS)"| n_api_service
+  n_api_service -->|"PostgreSQL over TLS via VPC connector"| n_db
+  n_secrets -->|"Env injection at start"| n_api_service
+```
 <!-- sdlc:auto:end topology -->

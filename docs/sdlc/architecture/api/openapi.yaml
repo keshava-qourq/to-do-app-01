@@ -2,6 +2,233 @@
 openapi: 3.1.0
 info:
   title: To Do app
-  version: architecture-v0
+  version: architecture-v1
   description: Designed API from the approved architecture (not extracted from code).
-paths: {}
+paths:
+  /auth/me:
+    get:
+      summary: Return the signed-in user; the SPA uses it to check the session on
+        load
+      description: Return the signed-in user; the SPA uses it to check the session
+        on load
+      operationId: get_auth_me
+      parameters: []
+      responses:
+        '200':
+          description: 200 {id,email,timezone}; 401
+      security:
+      - bearerAuth: []
+  /auth/signin:
+    post:
+      summary: Sign in and record the browser timezone (US-002)
+      description: Sign in and record the browser timezone (US-002)
+      operationId: post_auth_signin
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: '{email, password, timezone}'
+      responses:
+        '200':
+          description: 200 {token, expires_at, user}; 401 generic 'Email or password
+            is incorrect'
+  /auth/signout:
+    post:
+      summary: Revoke the current session immediately
+      description: Revoke the current session immediately
+      operationId: post_auth_signout
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: none
+      responses:
+        '200':
+          description: '204'
+      security:
+      - bearerAuth: []
+  /auth/signup:
+    post:
+      summary: Create an account and sign in (US-001)
+      description: Create an account and sign in (US-001)
+      operationId: post_auth_signup
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: '{email, password, timezone}'
+      responses:
+        '200':
+          description: 201 {token, expires_at, user:{id,email,timezone}}; 409 email
+            already registered; 422 field errors
+  /habits:
+    get:
+      summary: 'Today screen data: the user''s habits with today''s state and streak
+        (US-006, US-008)'
+      description: 'Today screen data: the user''s habits with today''s state and
+        streak (US-006, US-008)'
+      operationId: get_habits
+      parameters: []
+      responses:
+        '200':
+          description: 200 {today:'YYYY-MM-DD', habits:[{id,name,done_today,streak}]}
+      security:
+      - bearerAuth: []
+    post:
+      summary: Add a habit (US-004)
+      description: Add a habit (US-004)
+      operationId: post_habits
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: '{name: 1..100 chars, not blank}'
+      responses:
+        '200':
+          description: 201 {id,name,done_today:false,streak:0}; 422 name required
+            or too long
+      security:
+      - bearerAuth: []
+  /habits/{habit_id}:
+    delete:
+      summary: Delete a habit and its completions permanently (US-005)
+      description: Delete a habit and its completions permanently (US-005)
+      operationId: delete_habits_habit_id
+      parameters:
+      - name: habit_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 204; 404 if not found or not owned
+      security:
+      - bearerAuth: []
+  /habits/{habit_id}/today:
+    put:
+      summary: Set today's done state idempotently (US-007)
+      description: Set today's done state idempotently (US-007)
+      operationId: put_habits_habit_id_today
+      parameters:
+      - name: habit_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: '{done: boolean}'
+      responses:
+        '200':
+          description: 200 {id,name,done_today,streak}; 404 if not found or not owned
+      security:
+      - bearerAuth: []
+  /health:
+    get:
+      summary: Liveness/readiness for the container platform
+      description: Liveness/readiness for the container platform
+      operationId: get_health
+      parameters: []
+      responses:
+        '200':
+          description: 200 {status:'ok'}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    users:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+        password_hash:
+          type: string
+        timezone:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - email
+      - password_hash
+      - timezone
+      - created_at
+    sessions:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        token_hash:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        expires_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - user_id
+      - token_hash
+      - created_at
+      - expires_at
+    habits:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - user_id
+      - name
+      - created_at
+    completions:
+      type: object
+      properties:
+        id:
+          type: string
+        habit_id:
+          type: string
+          format: uuid
+        done_on:
+          type: string
+          format: date
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - habit_id
+      - done_on
+      - created_at

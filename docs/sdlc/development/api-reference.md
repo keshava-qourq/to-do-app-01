@@ -7,7 +7,16 @@ _No routes found._
 <!-- sdlc:auto:end endpoints -->
 
 <!-- sdlc:auto:start drift -->
-_Code matches the designed API._
+**Designed but missing:**
+
+- DELETE /habits/{habit_id}
+- GET /auth/me
+- GET /habits
+- POST /auth/signin
+- POST /auth/signout
+- POST /auth/signup
+- POST /habits
+- PUT /habits/{habit_id}/today
 <!-- sdlc:auto:end drift -->
 
 <!-- sdlc:auto:start source -->
