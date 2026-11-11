@@ -5,144 +5,149 @@
 <!-- sdlc:auto:start narrative -->
 ### DEV-PLAN-V1 · approved · source: plan:v1
 
-The development plan is approved at version 1. It defines 3 sprints of capacity 20 each and 6 epics. It covers the full in-scope feature set of the basic habit tracker. No implementation progress has been reported yet.
+The development plan is approved at version 1. It covers 6 epics, 11 stories and 3 tasks across 3 sprints of capacity 20 each. Stories total 45 points.
 
-- Plan status: approved, version 1. Approver and approval date were not provided.
-- Sprints: Sprint 1 (Foundation), Sprint 2 (Core habit loop), Sprint 3 (Polish and operability). Each sprint has capacity=20.
-- Epics: EPIC-001 Accounts and sign-in; EPIC-002 Habit management; EPIC-003 Today screen and daily check-off; EPIC-004 Streaks; EPIC-005 Responsive layout; EPIC-006 Setup, storage and operation.
-- Stories: US-001 to US-011, totalling 45 story points. Tasks: US-011-T1 to US-011-T3, unpointed.
-- Epics have no points and no assigned role.
-- Roles in use: backend-agent, frontend-agent, security-agent, devops-agent.
-- Out of scope per project brief: reminders, history views, stats, sharing, editing past days.
-- Naming discrepancy, recorded as given:
-  - Project name is 'To Do app'.
-  - Project description is 'Build a very basic habit tracker web app'.
-  - All plan items describe a habit tracker.
-- Implementation status: no development results were provided (no ticket completions, commits, PRs, or test outcomes).
+- Plan status: approved, version 1. Approver and date not stated.
+- Sprints: Sprint 1, Sprint 2, Sprint 3; each has capacity 20 (total 60).
+- Epics have no points and no role assigned:
+  - EPIC-001 Accounts and sign-in
+  - EPIC-002 Habit management
+  - EPIC-003 Today screen and daily check-off
+  - EPIC-004 Streaks
+  - EPIC-005 Responsive layout
+  - EPIC-006 Setup, storage and operation
+- Stories (points, role):
+  - US-001 Sign up with email and password (5, backend-agent)
+  - US-002 Sign in and sign out (5, backend-agent)
+  - US-003 Each user sees only their own habits (3, security-agent)
+  - US-004 Add a habit (3, backend-agent)
+  - US-005 Delete a habit (3, backend-agent)
+  - US-006 See my habits on the Today screen (5, frontend-agent)
+  - US-007 Mark a habit done with one tap and undo with a second (5, backend-agent)
+  - US-008 See the current streak next to each habit (5, backend-agent)
+  - US-009 Use the app on phone and desktop browsers (3, frontend-agent)
+  - US-010 Store data in PostgreSQL (3, backend-agent)
+  - US-011 Setup and usage guide (5, devops-agent)
+- Tasks under US-011 (no points given):
+  - T1 Add single-container build (devops-agent)
+  - T2 Implement start-up settings check (backend-agent)
+  - T3 Write setup and usage guide (devops-agent)
+- Item-to-sprint assignment is not given explicitly; only the sprint goals indicate intended scope.
+- Naming discrepancy recorded, not resolved: the project name is 'To Do app', but the description says 'a very basic habit tracker web app'. All plan items describe habit tracking.
 
 **Related:** EPIC-001, EPIC-002, EPIC-003, EPIC-004, EPIC-005, EPIC-006, US-001, US-002, US-003, US-004, US-005, US-006, US-007, US-008, US-009, US-010, US-011
 
 ### DEV-SPRINT-1 · approved · source: plan:Sprint 1
 
-Sprint 1 is the foundation sprint. It covers the persistent schema, account sign-up, sign-in and sign-out with sessions, and the Today screen listing a user's habits. Capacity is 20.
+Sprint 1 is the foundation sprint. It covers the persistent schema, account sign-up/sign-in/sign-out with sessions, and the Today screen habit list.
 
-- Goal (verbatim): Foundation: persistent schema, account sign-up/sign-in/sign-out with sessions, and the Today screen listing a user's habits.
+- Goal: Foundation: persistent schema, account sign-up/sign-in/sign-out with sessions, and the Today screen listing a user's habits.
 - Capacity: 20.
-- Explicit story-to-sprint assignment was not provided.
-- The goal text corresponds to the following stories (inferred mapping, not stated):
-  - US-010, Store data in PostgreSQL, 3 pts
-  - US-001, Sign up, 5 pts
-  - US-002, Sign in and sign out, 5 pts
-  - US-006, See my habits on the Today screen, 5 pts
-- That inferred set totals 18 pts, within capacity.
-- Dates, progress and outcome: not provided.
+- Items whose titles match the goal: US-010 (schema/PostgreSQL), US-001, US-002 and US-006. This is inferred from the goal text, not from an explicit assignment.
+- All four matching tickets are reported delivered (see DEV-US-001, DEV-US-002, DEV-US-006, DEV-US-010). Their points total 18 of capacity 20.
 
-**Related:** DEV-PLAN-V1, US-010, US-001, US-002, US-006
+**Related:** US-001, US-002, US-006, US-010, EPIC-001, EPIC-003, EPIC-006
 
 ### DEV-SPRINT-2 · approved · source: plan:Sprint 2
 
-Sprint 2 delivers the core habit loop: add, delete, one-tap done/undo, and streaks. It also enforces per-user privacy on all habit requests. Capacity is 20.
+Sprint 2 covers the core habit loop: add, delete, one-tap done/undo, streaks and per-user privacy. No ticket results were reported for any item in this goal.
 
-- Goal (verbatim): Core habit loop: add, delete, one-tap done/undo, streaks, and enforced per-user privacy on all habit requests.
+- Goal: Core habit loop: add, delete, one-tap done/undo, streaks, and enforced per-user privacy on all habit requests.
 - Capacity: 20.
-- Explicit story-to-sprint assignment was not provided.
-- The goal text corresponds to the following stories (inferred mapping, not stated):
-  - US-004, Add a habit, 3 pts
-  - US-005, Delete a habit, 3 pts
-  - US-007, One-tap done/undo, 5 pts
-  - US-008, Current streak, 5 pts
-  - US-003, Own habits only, 3 pts
-- That inferred set totals 19 pts, within capacity.
-- Dates, progress and outcome: not provided.
+- Items whose titles match the goal (inferred): US-004, US-005, US-007, US-008 and US-003. Their points total 19.
+- Delivery status: not reported in the development run input.
 
-**Related:** DEV-PLAN-V1, US-004, US-005, US-007, US-008, US-003
+**Related:** US-003, US-004, US-005, US-007, US-008, EPIC-001, EPIC-002, EPIC-003, EPIC-004
 
 ### DEV-SPRINT-3 · approved · source: plan:Sprint 3
 
-Sprint 3 covers polish and operability. Planned work is a responsive phone/desktop layout, a single-container run, a start-up settings check, and the setup and usage guide. Capacity is 20.
+Sprint 3 covers polish and operability: responsive layout, single-container run, start-up settings check, and the setup and usage guide. No ticket results were reported for any item in this goal.
 
-- Goal (verbatim): Polish and operability: responsive phone/desktop layout, single-container run, start-up settings check, and the setup and usage guide.
+- Goal: Polish and operability: responsive phone/desktop layout, single-container run, start-up settings check, and the setup and usage guide.
 - Capacity: 20.
-- Explicit story-to-sprint assignment was not provided.
-- The goal text corresponds to the following stories (inferred mapping, not stated):
-  - US-009, Phone and desktop, 3 pts
-  - US-011, Setup and usage guide, 5 pts, including tasks US-011-T1, US-011-T2 and US-011-T3
-- That inferred set totals 8 pts.
-- Dates, progress and outcome: not provided.
+- Items whose titles match the goal (inferred): US-009, plus US-011 with tasks T1, T2 and T3. Story points total 8.
+- Delivery status: not reported in the development run input.
 
-**Related:** DEV-PLAN-V1, US-009, US-011, US-011-T1, US-011-T2, US-011-T3
+**Related:** US-009, US-011, US-011-T1, US-011-T2, US-011-T3, EPIC-005, EPIC-006
 
-### EPIC-001 · approved · source: plan:EPIC-001
+### DEV-US-001 · draft · source: dev:US-001
 
-This epic covers accounts and sign-in: email/password sign-up, sign-in and sign-out, and per-user data isolation. Its three stories total 13 points.
+Ticket US-001, sign up with email and password, is reported as delivered.
 
-- EPIC-001 'Accounts and sign-in': points=None, role unassigned.
-- US-001 'Sign up with email and password': 5 pts, backend-agent.
-- US-002 'Sign in and sign out': 5 pts, backend-agent. Sprint 1 goal mentions sessions.
-- US-003 'Each user sees only their own habits': 3 pts, security-agent. Sprint 2 goal states privacy is to be enforced on all habit requests.
-- Implementation status: not reported.
+- Ticket status: delivered.
+- Commit: b55e4e6673afb8dacf3c07f60ea6184bab71076e.
+- Plan: 5 points, backend-agent.
+- Not provided: implementation details, review or approval, test results, delivery date.
+- Entry status stays draft until review or test evidence is supplied.
 
-**Related:** US-001, US-002, US-003, DEV-SPRINT-1, DEV-SPRINT-2
+**Related:** US-001, EPIC-001, DEV-SPRINT-1
 
-### EPIC-002 · approved · source: plan:EPIC-002
+### DEV-US-002 · draft · source: dev:US-002
 
-This epic covers habit management: adding and deleting habits. Its two stories total 6 points.
+Ticket US-002, sign in and sign out, is reported as delivered.
 
-- EPIC-002 'Habit management': points=None, role unassigned.
-- US-004 'Add a habit': 3 pts, backend-agent. Project brief: a habit has a name, max 100 characters.
-- US-005 'Delete a habit': 3 pts, backend-agent.
-- Editing habits is not listed in the plan.
-- Implementation status: not reported.
+- Ticket status: delivered.
+- Commit: b55e4e6673afb8dacf3c07f60ea6184bab71076e.
+- Plan: 5 points, backend-agent.
+- The Sprint 1 goal mentions sessions; the ticket input does not describe the session mechanism.
+- Not provided: review, test results, delivery date.
 
-**Related:** US-004, US-005, DEV-SPRINT-2
+**Related:** US-002, EPIC-001, DEV-SPRINT-1
 
-### EPIC-003 · approved · source: plan:EPIC-003
+### DEV-US-006 · draft · source: dev:US-006
 
-This epic covers the Today screen and daily check-off. Users list their habits and toggle today's completion with a single tap. Its two stories total 10 points.
+Ticket US-006, see my habits on the Today screen, is reported as delivered.
 
-- EPIC-003 'Today screen and daily check-off': points=None, role unassigned.
-- US-006 'See my habits on the Today screen': 5 pts, frontend-agent.
-- US-007 'Mark a habit done with one tap and undo with a second': 5 pts, backend-agent.
-- Out of scope per brief: editing past days.
-- Implementation status: not reported.
+- Ticket status: delivered.
+- Commit: b55e4e6673afb8dacf3c07f60ea6184bab71076e.
+- Plan: 5 points, frontend-agent.
+- Scope as titled: listing habits on the Today screen.
+- Done/undo (US-007) and streak display (US-008) are separate stories with no reported ticket.
+- Not provided: review, test results, delivery date.
 
-**Related:** US-006, US-007, DEV-SPRINT-1, DEV-SPRINT-2
+**Related:** US-006, EPIC-003, DEV-SPRINT-1
 
-### EPIC-004 · approved · source: plan:EPIC-004
+### DEV-US-010 · draft · source: dev:US-010
 
-This epic covers streaks: showing the current consecutive-day streak next to each habit. It has one story of 5 points.
+Ticket US-010, store data in PostgreSQL, is reported as delivered.
 
-- EPIC-004 'Streaks': points=None, role unassigned.
-- US-008 'See the current streak next to each habit': 5 pts, backend-agent.
-- Brief defines a streak as days in a row done.
-- Streak calculation rules were not provided, such as timezone or day-boundary handling, or treatment of today when not yet done.
-- Implementation status: not reported.
+- Ticket status: delivered.
+- Commit: b55e4e6673afb8dacf3c07f60ea6184bab71076e.
+- Plan: 3 points, backend-agent.
+- Schema details were not provided.
+- Not provided: review, test results, delivery date.
 
-**Related:** US-008, DEV-SPRINT-2
+**Related:** US-010, EPIC-006, DEV-SPRINT-1
 
-### EPIC-005 · approved · source: plan:EPIC-005
+### DEV-RUN-STATUS · draft · source: dev:run
 
-This epic covers a responsive layout so the app works in both phone and desktop browsers. It has one story of 3 points.
+The development run is marked completed, but it reports only 4 of the 11 planned stories. All 4 were delivered in a single commit.
 
-- EPIC-005 'Responsive layout': points=None, role unassigned.
-- US-009 'Use the app on phone and desktop browsers': 3 pts, frontend-agent.
-- Target browsers and breakpoints were not specified.
-- Implementation status: not reported.
+- Run status: completed.
+- Delivered tickets: US-001, US-002, US-006, US-010.
+  - These total 18 points of the 45 planned.
+  - All four share commit b55e4e6673afb8dacf3c07f60ea6184bab71076e.
+- Conflict recorded, not resolved:
+  - The run is marked 'completed'.
+  - The approved plan includes 7 more stories and 3 tasks with no reported ticket outcome (see DEV-GAPS).
+  - The input does not say whether the run was scoped to Sprint 1 only or covered the whole plan.
 
-**Related:** US-009, DEV-SPRINT-3
+**Related:** US-001, US-002, US-006, US-010, DEV-PLAN-V1
 
-### EPIC-006 · approved · source: plan:EPIC-006
+### DEV-GAPS · draft · source: plan:v1
 
-This epic covers setup, storage and operation: PostgreSQL persistence, a single-container build, a start-up settings check, and a setup and usage guide. It has two stories totalling 8 points, plus three tasks.
+Seven planned stories and three tasks have no ticket outcome in the development run. Their delivery status is unknown and is not assumed either way.
 
-- EPIC-006 'Setup, storage and operation': points=None, role unassigned.
-- US-010 'Store data in PostgreSQL': 3 pts, backend-agent.
-- US-011 'Setup and usage guide': 5 pts, devops-agent. Its tasks:
-  - US-011-T1 'Add single-container build': devops-agent, unpointed.
-  - US-011-T2 'Implement start-up settings check': backend-agent, unpointed.
-  - US-011-T3 'Write setup and usage guide': devops-agent, unpointed.
-- Specific settings validated at start-up and container details were not provided.
-- Implementation status: not reported.
+Items with no reported ticket:
+- US-003 Each user sees only their own habits (security-agent, 3 pts). The project description requires per-user privacy; enforcement is unconfirmed.
+- US-004 Add a habit (3 pts). The 100-character name limit is unconfirmed.
+- US-005 Delete a habit (3 pts).
+- US-007 One-tap done / second-tap undo (5 pts).
+- US-008 Current streak next to each habit (5 pts).
+- US-009 Phone and desktop browsers (3 pts).
+- US-011 Setup and usage guide (5 pts), plus tasks T1 (single-container build), T2 (start-up settings check) and T3 (write guide).
 
-**Related:** US-010, US-011, US-011-T1, US-011-T2, US-011-T3, DEV-SPRINT-1, DEV-SPRINT-3
+Action needed: obtain ticket status and commits for these items before treating the application as feature-complete against the project description.
+
+**Related:** US-003, US-004, US-005, US-007, US-008, US-009, US-011, US-011-T1, US-011-T2, US-011-T3
 <!-- sdlc:auto:end narrative -->
