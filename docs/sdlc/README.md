@@ -13,7 +13,7 @@ Build a very basic habit tracker web app.
  
 Out of scope: reminders, history views, stats, sharing, editing past days.
 
-**Documentation version:** v6
+**Documentation version:** v7
 <!-- sdlc:auto:end overview -->
 
 ## Contents
@@ -24,7 +24,7 @@ Out of scope: reminders, history views, stats, sharing, editing past days.
 | [Requirements](requirements/README.md) | v1 approved |
 | [Architecture](architecture/README.md) | 16 entries |
 | [Development](development/README.md) | 10 entries |
-| [Testing](testing/README.md) | 0 entries |
+| [Testing](testing/README.md) | 3 entries |
 | [Deployment](deployment/README.md) | 3 entries |
 | [Maintenance](maintenance/README.md) | 0 entries |
 | [Data model](architecture/data-model.md) | generated |
@@ -33,11 +33,11 @@ Out of scope: reminders, history views, stats, sharing, editing past days.
 | [Sprint plan](development/sprint-plan.md) | 3 sprints |
 | [Developer guide](development/developer-guide.md) | generated |
 | [API reference](development/api-reference.md) | 6 routes |
-| [Test report](testing/test-report.md) | running |
-| [Tests](testing/test-cases.md) | 0 tests |
+| [Test report](testing/test-report.md) | passed |
+| [Tests](testing/test-cases.md) | 69 tests |
 | [Deployment guide](deployment/deployment-guide.md) | deployed |
 | [Runbook](deployment/runbook.md) | deployed |
 | [Release notes](deployment/release-notes.md) | 2 releases |
 | [Traceability matrix](traceability-matrix.md) | 11 requirements |
-| [Changelog](CHANGELOG.md) | 6 versions |
+| [Changelog](CHANGELOG.md) | 7 versions |
 <!-- sdlc:auto:end contents -->
