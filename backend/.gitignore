@@ -6,3 +6,7 @@ venv/
 .mypy_cache/
 *.db
 .env
+.coverage
+.ruff_cache/
+coverage.json
+test-results/

@@ -5,6 +5,7 @@ import, so importing the application opens nothing and needs no environment.
 A missing required setting fails fast with an error that names it.
 """
 
+import os
 import secrets
 from functools import lru_cache
 
@@ -22,8 +23,8 @@ class Settings(BaseSettings):
 
     # Private key that session tokens are HMAC-hashed with. SESSION_SECRET is the name
     # the architecture uses; the platform also provides JWT_SECRET_KEY, accepted as
-    # the same thing. Locally, with neither set, a random per-process value is used
-    # (sessions then do not survive a restart, which is fine for a local run).
+    # the same thing. Startup fails when neither is set; the random fallback exists only
+    # so tests and tools that never start the app can hash tokens.
     # Never use SECRET_KEY here: it is the public API bearer.
     session_secret: str = Field(
         default_factory=lambda: secrets.token_urlsafe(32),
@@ -40,12 +41,14 @@ class Settings(BaseSettings):
     bootstrap_admin_email: str = Field(default="", validation_alias="BOOTSTRAP_ADMIN_EMAIL")
     bootstrap_admin_password: str = Field(default="", validation_alias="BOOTSTRAP_ADMIN_PASSWORD")
 
-    @property
-    def cors_origins(self) -> list[str]:
-        origins = [o.strip() for o in self.allowed_origins.split(",") if o.strip()]
-        return origins or _DEV_ORIGINS
-
 
 @lru_cache
 def get_settings() -> Settings:
     return Settings()
+
+
+def cors_origins() -> list[str]:
+    """Allowed SPA origins from ALLOWED_ORIGINS, read from the environment so importing
+    the app never requires DATABASE_URL. Empty means the local Vite dev server."""
+    raw = os.getenv("ALLOWED_ORIGINS", "")
+    return [o.strip() for o in raw.split(",") if o.strip()] or _DEV_ORIGINS
