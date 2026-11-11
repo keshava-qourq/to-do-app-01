@@ -1,7 +1,7 @@
 // @ts-nocheck -- generated from the approved design under its JS runtime contract; not hand-written TypeScript.
 
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@/lib/navigate";
 
 import { Icons } from "@/lib/icons";
 import { brand } from "@/lib/brand";
@@ -41,6 +41,75 @@ export default function Screen() {
     };
   }, []);
 
+  const [name, setName] = React.useState("");
+  const [nameError, setNameError] = React.useState("");
+  const [adding, setAdding] = React.useState(false);
+  const [pending, setPending] = React.useState({});
+  const [confirmId, setConfirmId] = React.useState(null);
+  const [rowError, setRowError] = React.useState("");
+  const busy = React.useRef(new Set());
+
+  function onAdd(e) {
+    e.preventDefault();
+    if (adding) return;
+    const n = name.trim();
+    if (!n) {
+      setNameError("Habit name is required.");
+      return;
+    }
+    if (n.length > MAX_NAME) {
+      setNameError(`Habit name must be at most ${MAX_NAME} characters.`);
+      return;
+    }
+    setNameError("");
+    setAdding(true);
+    apiFetch("/habits", { method: "POST", body: JSON.stringify({ name: n }) })
+      .then((h) => {
+        setHabits((p) => [...(p || []), h]);
+        setName("");
+      })
+      .catch((err) => {
+        const d = err && err.body && err.body.detail;
+        const f = Array.isArray(d) && d.find((x) => x.loc && x.loc[1] === "name");
+        setNameError(
+          f ? `Habit name: ${f.msg}` : "Habit name could not be saved. Please try again.",
+        );
+      })
+      .finally(() => setAdding(false));
+  }
+
+  function setPendingFor(id, on) {
+    if (on) busy.current.add(id);
+    else busy.current.delete(id);
+    setPending((p) => ({ ...p, [id]: on }));
+  }
+
+  function onTick(h) {
+    if (busy.current.has(h.id)) return;
+    setRowError("");
+    setPendingFor(h.id, true);
+    apiFetch(`/habits/${h.id}/today`, {
+      method: "PUT",
+      body: JSON.stringify({ done: !h.done_today }),
+    })
+      .then((u) => setHabits((p) => p.map((x) => (x.id === h.id ? u : x))))
+      .catch(() => setRowError("Could not update that habit. Please try again."))
+      .finally(() => setPendingFor(h.id, false));
+  }
+
+  function onDelete(h) {
+    if (busy.current.has(h.id)) return;
+    setRowError("");
+    setPendingFor(h.id, true);
+    apiFetch(`/habits/${h.id}`, { method: "DELETE" })
+      .then(() => {
+        setHabits((p) => p.filter((x) => x.id !== h.id));
+        setConfirmId(null);
+      })
+      .catch(() => setRowError("Could not delete that habit. Please try again."))
+      .finally(() => setPendingFor(h.id, false));
+  }
+
   const list = habits || [];
   const ink = brand.primaryColor;
   const paper = brand.backgroundColor;
@@ -73,11 +142,11 @@ export default function Screen() {
     }
   `;
 
-  const disabledBtn = {
+  const rowBtn = {
     border: 0,
     backgroundColor: "transparent",
     color: ink,
-    cursor: "not-allowed",
+    cursor: "pointer",
   };
 
   return (
@@ -138,7 +207,7 @@ export default function Screen() {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:items-start">
             <form
               id="add-habit-form"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={onAdd}
               noValidate
               data-wf="b-1-0"
               className="md:col-span-9"
@@ -171,12 +240,15 @@ export default function Screen() {
                 id="habit-name"
                 data-wf="i-1-0-0"
                 type="text"
-                value=""
-                readOnly
-                disabled
-                aria-disabled="true"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setNameError("");
+                }}
                 maxLength={MAX_NAME}
-                placeholder="Adding habits is not available yet"
+                aria-invalid={nameError ? "true" : "false"}
+                aria-describedby={nameError ? "habit-name-err" : undefined}
+                placeholder="e.g. Drink water"
                 style={{
                   width: "100%",
                   minHeight: 52,
@@ -188,6 +260,11 @@ export default function Screen() {
                   color: ink,
                 }}
               />
+              {nameError && (
+                <p id="habit-name-err" role="alert" style={{ marginTop: 8, fontWeight: 700 }}>
+                  {nameError}
+                </p>
+              )}
             </form>
 
             <div className="md:col-span-3">
@@ -195,8 +272,7 @@ export default function Screen() {
                 type="submit"
                 form="add-habit-form"
                 data-wf="b-1-1"
-                disabled
-                aria-disabled="true"
+                disabled={adding}
                 className="bs-press bs-focus flex w-full items-center justify-center gap-2"
                 style={{
                   minHeight: 56,
@@ -243,6 +319,7 @@ export default function Screen() {
 
           {!failed && habits === null && <p role="status">Loading your habits…</p>}
           {failed && <p role="alert">Could not load your habits. Please try again.</p>}
+          {rowError && <p role="alert">{rowError}</p>}
 
           {list.length > 0 && (
             <ul
@@ -257,10 +334,11 @@ export default function Screen() {
                 >
                   <button
                     type="button"
-                    disabled
-                    aria-disabled="true"
-                    className="flex w-full items-center gap-4 text-left"
-                    style={{ ...disabledBtn, minHeight: 80, padding: "16px 24px" }}
+                    disabled={!!pending[h.id]}
+                    onClick={() => onTick(h)}
+                    aria-pressed={h.done_today ? "true" : "false"}
+                    className="bs-focus flex w-full items-center gap-4 text-left"
+                    style={{ ...rowBtn, minHeight: 80, padding: "16px 24px" }}
                   >
                     <span
                       aria-hidden="true"
@@ -320,25 +398,54 @@ export default function Screen() {
                       </span>
                     </span>
                   </button>
-                  <button
-                    type="button"
-                    disabled
-                    aria-disabled="true"
-                    className="flex w-full items-center justify-center gap-2"
-                    aria-label={`Delete habit: ${h.name}`}
-                    style={{
-                      ...disabledBtn,
-                      minHeight: 48,
-                      borderTop: `1px dashed ${ink}`,
-                      fontSize: 12,
-                      fontWeight: 700,
-                      letterSpacing: "0.12em",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    <Icons.X className="h-4 w-4" aria-hidden="true" />
-                    Delete habit
-                  </button>
+                  {confirmId === h.id ? (
+                    <div
+                      role="group"
+                      aria-label={`Confirm delete: ${h.name}`}
+                      className="flex flex-wrap items-center gap-4"
+                      style={{ borderTop: `1px dashed ${ink}`, padding: "8px 24px" }}
+                    >
+                      <span style={{ fontWeight: 700 }}>Delete this habit and its history?</span>
+                      <button
+                        type="button"
+                        disabled={!!pending[h.id]}
+                        onClick={() => onDelete(h)}
+                        className="bs-focus"
+                        style={{ ...rowBtn, minHeight: 48, fontWeight: 700, color: accent }}
+                      >
+                        Confirm delete
+                      </button>
+                      <button
+                        type="button"
+                        disabled={!!pending[h.id]}
+                        onClick={() => setConfirmId(null)}
+                        className="bs-focus"
+                        style={{ ...rowBtn, minHeight: 48, fontWeight: 700 }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled={!!pending[h.id]}
+                      onClick={() => setConfirmId(h.id)}
+                      className="bs-focus flex w-full items-center justify-center gap-2"
+                      aria-label={`Delete habit: ${h.name}`}
+                      style={{
+                        ...rowBtn,
+                        minHeight: 48,
+                        borderTop: `1px dashed ${ink}`,
+                        fontSize: 12,
+                        fontWeight: 700,
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      <Icons.X className="h-4 w-4" aria-hidden="true" />
+                      Delete habit
+                    </button>
+                  )}
                 </li>
               ))}
             </ul>
