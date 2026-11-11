@@ -38,7 +38,8 @@ class HabitTodayUpdate(BaseModel):
 
 
 def _today(user: User) -> date:
-    return security.now().astimezone(ZoneInfo(user.timezone)).date()
+    tz = ZoneInfo(security.valid_timezone(user.timezone) or "UTC")
+    return security.now().astimezone(tz).date()
 
 
 def _own_habit(db: Session, user: User, habit_id: str) -> Habit:
@@ -104,7 +105,6 @@ def delete_habit(
     db: Annotated[Session, Depends(get_db)],
 ) -> Response:
     habit = _own_habit(db, user, habit_id)
-    db.execute(delete(Completion).where(Completion.habit_id == habit.id))
     db.execute(delete(Habit).where(Habit.id == habit.id))
     db.commit()
     return Response(status_code=204)
@@ -115,7 +115,7 @@ def list_habits(
     user: Annotated[User, Depends(security.get_current_user)],
     db: Annotated[Session, Depends(get_db)],
 ) -> list[HabitOut]:
-    today = security.now().astimezone(ZoneInfo(user.timezone)).date()
+    today = _today(user)
     rows = db.execute(
         select(Habit.id, Habit.name, Completion.day)
         .outerjoin(Completion, Completion.habit_id == Habit.id)

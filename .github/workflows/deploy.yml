@@ -76,7 +76,6 @@ jobs:
           # the way an AWS-assigned hostname would have to be. The variable name is the
           # frontend's own, because a bundler inlines only its own prefix.
           VITE_API_BASE_URL: https://100-22-65-241.sslip.io/apps/cb7ff60b1acf/
-          NEXT_PUBLIC_API_SECRET_KEY: "cb7ff60b-1acf-4381-a6d9-44bb2d51b639"
           VITE_API_SECRET_KEY: "cb7ff60b-1acf-4381-a6d9-44bb2d51b639"
 
       - name: Deploy the frontend

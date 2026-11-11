@@ -5,6 +5,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Response
 from pydantic import BaseModel, EmailStr, Field, field_validator
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app import security
@@ -54,7 +55,11 @@ def signup(body: Credentials, db: DB) -> AuthOut:
         timezone=security.valid_timezone(body.timezone) or "UTC",
     )
     db.add(user)
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(409, "An account already exists for this email") from None
     return AuthOut(token=security.create_session(db, user), user=user_out(user))
 
 

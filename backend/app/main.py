@@ -1,6 +1,5 @@
 """Application entrypoint: settings validation, migrations, bootstrap user, CORS, routers."""
 
-import os
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
@@ -13,7 +12,7 @@ from app.database import get_sessionmaker
 from app.migrate import upgrade_to_head
 from app.routers.auth import router as auth_router
 from app.routers.habits import router as habits_router
-from app.settings import get_settings
+from app.settings import cors_origins, get_settings
 
 
 @asynccontextmanager
@@ -43,10 +42,10 @@ app = FastAPI(
 # header, so cookies and credentials are not used.
 # Read straight from the environment here (not via get_settings) so importing the app
 # never requires DATABASE_URL.
-_origins = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "").split(",") if o.strip()]
+_origins = cors_origins()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=_origins or ["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=_origins,
     allow_credentials=False,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["Authorization", "Content-Type"],
@@ -59,5 +58,5 @@ app.include_router(habits_router)
 
 @app.get("/health")
 async def health() -> dict[str, str]:
-    """Liveness probe, and the only route here that is not a stub."""
+    """Liveness probe, ."""
     return {"status": "ok"}

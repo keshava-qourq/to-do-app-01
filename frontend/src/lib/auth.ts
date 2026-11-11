@@ -3,7 +3,7 @@ import type { NavigateFunction } from "react-router-dom";
 
 import { ApiError, apiFetch, clearSessionToken, setSessionToken } from "@/lib/api";
 
-export type User = { id: number; email: string; timezone: string };
+export type User = { id: string; email: string; timezone: string };
 type AuthResponse = { token: string; user: User };
 
 const timezone = () => Intl.DateTimeFormat().resolvedOptions().timeZone;
