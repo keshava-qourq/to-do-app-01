@@ -9,15 +9,15 @@ Built from recorded links, not written by a model: requirement key → plan item
 <!-- sdlc:auto:start matrix -->
 | Requirement | Epic | Title | Plan items | Sprint | Design | Code | Commits | Ticket | Tests | AC tests | Deployed |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| US-001 | EPIC-001 | Sign up with email and password | — | — | — | — | — | not started | not run | 0/4 tested · 0/4 passing | — |
-| US-002 | EPIC-001 | Sign in and sign out | — | — | — | — | — | not started | not run | 0/5 tested · 0/5 passing | — |
-| US-003 | EPIC-001 | Each user sees only their own habits | — | — | — | — | — | not started | not run | 0/2 tested · 0/2 passing | — |
-| US-004 | EPIC-002 | Add a habit | — | — | — | — | — | not started | not run | 0/4 tested · 0/4 passing | — |
-| US-005 | EPIC-002 | Delete a habit | — | — | — | — | — | not started | not run | 0/3 tested · 0/3 passing | — |
-| US-006 | EPIC-003 | See my habits on the Today screen | — | — | — | — | — | not started | not run | 0/3 tested · 0/3 passing | — |
-| US-007 | EPIC-003 | Mark a habit done with one tap and undo with a second | — | — | — | — | — | not started | not run | 0/4 tested · 0/4 passing | — |
-| US-008 | EPIC-004 | See the current streak next to each habit | — | — | — | — | — | not started | not run | 0/6 tested · 0/6 passing | — |
-| US-009 | EPIC-005 | Use the app on phone and desktop browsers | — | — | — | — | — | not started | not run | 0/3 tested · 0/3 passing | — |
-| US-010 | EPIC-006 | Store data in PostgreSQL | — | — | — | — | — | not started | not run | 0/2 tested · 0/2 passing | — |
-| US-011 | EPIC-006 | Setup and usage guide | — | — | — | — | — | not started | not run | 0/3 tested · 0/3 passing | — |
+| US-001 | EPIC-001 | Sign up with email and password | US-001 | 1 | GET /auth/me, POST /auth/signup, api, sessions, users, web_spa | — | — | not started | not run | 0/4 tested · 0/4 passing | — |
+| US-002 | EPIC-001 | Sign in and sign out | US-002 | 1 | GET /auth/me, POST /auth/signin, POST /auth/signout, api, sessions, users, web_spa | — | — | not started | not run | 0/5 tested · 0/5 passing | — |
+| US-003 | EPIC-001 | Each user sees only their own habits | US-003 | 2 | DELETE /habits/{habit_id}, GET /habits, PUT /habits/{habit_id}/today, api, completions, habits, users | — | — | not started | not run | 0/2 tested · 0/2 passing | — |
+| US-004 | EPIC-002 | Add a habit | US-004 | 2 | POST /habits, api, habits, web_spa | — | — | not started | not run | 0/4 tested · 0/4 passing | — |
+| US-005 | EPIC-002 | Delete a habit | US-005 | 2 | DELETE /habits/{habit_id}, api, completions, habits, web_spa | — | — | not started | not run | 0/3 tested · 0/3 passing | — |
+| US-006 | EPIC-003 | See my habits on the Today screen | US-006 | 1 | GET /habits, api, completions, habits, users, web_spa | — | — | not started | not run | 0/3 tested · 0/3 passing | — |
+| US-007 | EPIC-003 | Mark a habit done with one tap and undo with a second | US-007 | 2 | PUT /habits/{habit_id}/today, api, completions, database, habits, web_spa | — | — | not started | not run | 0/4 tested · 0/4 passing | — |
+| US-008 | EPIC-004 | See the current streak next to each habit | US-008 | 2 | GET /habits, PUT /habits/{habit_id}/today, api, completions, habits, web_spa | — | — | not started | not run | 0/6 tested · 0/6 passing | — |
+| US-009 | EPIC-005 | Use the app on phone and desktop browsers | US-009 | 3 | web_spa | — | — | not started | not run | 0/3 tested · 0/3 passing | — |
+| US-010 | EPIC-006 | Store data in PostgreSQL | US-010 | 1 | GET /health, api, completions, database, habits, sessions, users | — | — | not started | not run | 0/2 tested · 0/2 passing | — |
+| US-011 | EPIC-006 | Setup and usage guide | US-011, US-011-T1, US-011-T2, US-011-T3 | 3 | GET /health, api, secrets, web_spa | — | — | not started | not run | 0/3 tested · 0/3 passing | — |
 <!-- sdlc:auto:end matrix -->
