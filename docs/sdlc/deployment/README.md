@@ -3,39 +3,53 @@
 > Maintained by QuorQ AI SDLC. Text between `sdlc:auto` markers is regenerated; anything outside them is yours and is kept.
 
 <!-- sdlc:auto:start narrative -->
-### DEP-773e55d5850a · draft · source: deployment:773e55d5850a
+### DEP-d43179e8fd4b · draft · source: deployment:d43179e8fd4b
 
-Version 773e55d5850a of the To Do app (a basic habit tracker web app) has deployment status 'live'. It is deployed as a separate frontend and backend.
+Version d43179e8fd4b of the To Do app (a basic habit tracker web app) is recorded as live. The release has a frontend endpoint and a separate backend endpoint. Only status, version and URLs were provided.
 
-- Deployment status: live
-- Version: 773e55d5850a
+What was deployed:
+- Project: To Do app (basic habit tracker web app)
+- Version: d43179e8fd4b
+- Status: live
 - Frontend URL: https://pcb7ff60b1acf.d3j61xaup4zgrx.amplifyapp.com
 - Backend URL: https://100-22-65-241.sslip.io/apps/cb7ff60b1acf/
-- Not stated in input (left undocumented): deployment date/time, who deployed or approved the release, environment name (e.g. production vs. staging), database/PostgreSQL deployment details, smoke-test or health-check results, rollback procedure.
-- Requirement coverage: the input does not say which requirements (US-001 to US-011) are included in this release, so no requirement links are asserted.
 
-**Related:** DEP-773e55d5850a-FE, DEP-773e55d5850a-BE
+Not stated in the input (left blank, not inferred):
+- Deployment date/time
+- Who deployed or approved the release
+- Environment name (e.g. production vs. staging)
+- Pre- or post-deployment test, smoke-test or health-check results
+- Database (PostgreSQL) provisioning or migration details
+- Rollback plan or previous version
+- Which requirements (US-001 to US-011) are included. No requirement-to-release mapping was given, so no requirement ids are linked.
 
-### DEP-773e55d5850a-FE · draft · source: deployment:773e55d5850a
+The entry status is 'draft' because no approval or sign-off was provided.
 
-This is the frontend endpoint for live version 773e55d5850a. End users access the web app here.
+**Related:** DEP-d43179e8fd4b-FE, DEP-d43179e8fd4b-BE
+
+### DEP-d43179e8fd4b-FE · draft · source: deployment:d43179e8fd4b
+
+This is the frontend endpoint for release d43179e8fd4b. The hostname indicates hosting on AWS Amplify.
 
 - URL: https://pcb7ff60b1acf.d3j61xaup4zgrx.amplifyapp.com
-- Hosting: the hostname is on the amplifyapp.com domain. This is inferred from the URL only; no hosting configuration was provided.
-- Version: 773e55d5850a
-- Status: live
+- Hosting: the amplifyapp.com domain indicates AWS Amplify. This is inferred from the URL only; the input does not state any hosting configuration.
+- Release version: d43179e8fd4b
+- Release status: live
+- Not stated: custom domain, TLS/certificate details, build settings, environment variables.
 
-**Related:** DEP-773e55d5850a
+**Related:** DEP-d43179e8fd4b
 
-### DEP-773e55d5850a-BE · draft · source: deployment:773e55d5850a
+### DEP-d43179e8fd4b-BE · draft · source: deployment:d43179e8fd4b
 
-This is the backend endpoint for live version 773e55d5850a. It serves the API used by the frontend.
+This is the backend endpoint for release d43179e8fd4b. It is served over HTTPS from an sslip.io hostname under an app-specific path.
 
 - URL: https://100-22-65-241.sslip.io/apps/cb7ff60b1acf/
-- Served over HTTPS on an sslip.io hostname under the path /apps/cb7ff60b1acf/. This is inferred from the URL only; no server, runtime, or database configuration was provided.
-- Version: 773e55d5850a
-- Status: live
-- Note: the app identifier 'cb7ff60b1acf' appears in both the frontend hostname and the backend path.
+- The sslip.io hostname maps to IP 100.22.65.241. This is derived from the hostname format only; the input states no infrastructure details.
+- App path segment: /apps/cb7ff60b1acf/
+- Release version: d43179e8fd4b
+- Release status: live
+- Per the project description, data is stored in PostgreSQL. The input gives no details of the deployed database instance, migrations or backups.
+- Not stated: API health-check result, scaling, logging/monitoring setup, secrets management.
 
-**Related:** DEP-773e55d5850a
+**Related:** DEP-d43179e8fd4b
 <!-- sdlc:auto:end narrative -->
