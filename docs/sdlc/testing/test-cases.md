@@ -3,9 +3,9 @@
 > Maintained by QuorQ AI SDLC. Text between `sdlc:auto` markers is regenerated; anything outside them is yours and is kept.
 
 <!-- sdlc:auto:start summary -->
-69 tests · Passed 24 · Failed 45 · Skipped 0 · Not run 0
+98 tests · Passed 32 · Failed 59 · Skipped 0 · Not run 7
 
-Acceptance criteria covered: 14/39 · passing: 0/39
+Acceptance criteria covered: 28/39 · passing: 0/39
 <!-- sdlc:auto:end summary -->
 
 <!-- sdlc:auto:start tests -->
@@ -80,12 +80,48 @@ Acceptance criteria covered: 14/39 · passing: 0/39
 | AC-021 | test_ac021_today_follows_user_timezone[Pacific/Auckland-False-1] | Integration | Failed | `backend/tests/integration/test_habits.py` |
 | AC-036 | test_ac036_constant_query_count | Integration | Failed | `backend/tests/integration/test_habits.py` |
 
+## Sprint 2
+
+### US-004: Add a habit
+
+| Criteria | Test | Level | Result | File |
+|---|---|---|---|---|
+| AC-012 | Today > [AC-012] adds a habit and clears the input | Unit | Passed | `frontend/src/screens/Today.test.tsx` |
+| AC-013 | Today > [AC-013] [NFR-013] blank name shows a name message and sends nothing | Unit | Passed | `frontend/src/screens/Today.test.tsx` |
+| AC-014 | Today > [AC-014] a 422 on name shows the field message | Unit | Passed | `frontend/src/screens/Today.test.tsx` |
+| AC-016 | Today > [AC-016] deleting after confirming removes the habit | Unit | Passed | `frontend/src/screens/Today.test.tsx` |
+| AC-018 | Today > [AC-018] cancelling the confirmation keeps the habit | Unit | Passed | `frontend/src/screens/Today.test.tsx` |
+| AC-022, AC-023, AC-030 | Today > [AC-022] [AC-023] [AC-030] tapping sends desired state and shows streak | Unit | Passed | `frontend/src/screens/Today.test.tsx` |
+| AC-024 | Today > [AC-024] the row is disabled while the request is in flight | Unit | Passed | `frontend/src/screens/Today.test.tsx` |
+| AC-025 | Today > [AC-025] offers no date controls | Unit | Passed | `frontend/src/screens/Today.test.tsx` |
+| AC-010 | test_ac010_list_only_own_habits | Integration | Failed | `backend/tests/acceptance/test_us004_acceptance.py` |
+| AC-011 | test_ac011_nfr005_cross_user_put_delete_404_unchanged | Integration | Failed | `backend/tests/acceptance/test_us004_acceptance.py` |
+| AC-017 | test_ac017_nfr006_delete_removes_habit_and_completions | Integration | Failed | `backend/tests/acceptance/test_us004_acceptance.py` |
+| AC-024 | test_ac024_nfr010_repeated_put_one_completion | Integration | Failed | `backend/tests/acceptance/test_us004_acceptance.py` |
+| AC-012 | [AC-012] adds a habit and it is listed | E2E | Not run yet | `frontend/e2e/today.spec.ts` |
+| AC-013 | [AC-013] [NFR-013] empty name is rejected with a name message | E2E | Not run yet | `frontend/e2e/today.spec.ts` |
+| AC-014 | [AC-014] [NFR-013] name over 100 chars is rejected with a name message | E2E | Not run yet | `frontend/e2e/today.spec.ts` |
+| AC-016 | [AC-016] delete after confirm removes habit permanently | E2E | Not run yet | `frontend/e2e/today.spec.ts` |
+| AC-018 | [AC-018] cancel leaves the habit unchanged | E2E | Not run yet | `frontend/e2e/today.spec.ts` |
+| AC-022, AC-023, AC-030 | [AC-022] [AC-023] [AC-030] tapping toggles done and streak immediately | E2E | Not run yet | `frontend/e2e/today.spec.ts` |
+| AC-025 | [AC-025] no control to change a day other than today | E2E | Not run yet | `frontend/e2e/today.spec.ts` |
+
 ## Project setup
 
 | Criteria | Test | Level | Result | File |
 |---|---|---|---|---|
 | — | test_seeds_nothing_without_settings | Unit | Failed | `backend/tests/unit/test_bootstrap.py` |
 | — | test_seeds_once_and_is_idempotent | Unit | Failed | `backend/tests/unit/test_bootstrap.py` |
+| AC-011 | test_ac011_cross_user_and_missing_404 | Integration | Failed | `backend/tests/integration/test_habit_mutations.py` |
+| AC-012 | test_ac012_create_returns_201_and_listed | Integration | Failed | `backend/tests/integration/test_habit_mutations.py` |
+| AC-013, AC-014 | test_ac013_ac014_invalid_name_422[   ] | Integration | Failed | `backend/tests/integration/test_habit_mutations.py` |
+| AC-013, AC-014 | test_ac013_ac014_invalid_name_422[] | Integration | Failed | `backend/tests/integration/test_habit_mutations.py` |
+| AC-013, AC-014 | test_ac013_ac014_invalid_name_422[name2] | Integration | Failed | `backend/tests/integration/test_habit_mutations.py` |
+| AC-015 | test_ac015_no_limit_and_100_chars_ok | Integration | Failed | `backend/tests/integration/test_habit_mutations.py` |
+| AC-016, AC-017 | test_ac016_ac017_delete_cascades | Integration | Failed | `backend/tests/integration/test_habit_mutations.py` |
+| AC-022, AC-023, AC-024 | test_ac022_ac023_ac024_toggle_idempotent | Integration | Failed | `backend/tests/integration/test_habit_mutations.py` |
+| AC-025 | test_ac025_no_date_endpoint | Integration | Failed | `backend/tests/integration/test_habit_mutations.py` |
+| — | test_mutations_401_without_valid_token | Integration | Failed | `backend/tests/integration/test_habit_mutations.py` |
 | — | test_health_reports_ok | Integration | Failed | `backend/tests/integration/test_health.py` |
 | — | test_the_openapi_document_builds | Integration | Failed | `backend/tests/integration/test_health.py` |
 | — | the app loads | E2E | Passed | `frontend/e2e/example.spec.ts` |

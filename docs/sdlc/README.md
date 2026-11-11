@@ -13,7 +13,7 @@ Build a very basic habit tracker web app.
  
 Out of scope: reminders, history views, stats, sharing, editing past days.
 
-**Documentation version:** v7
+**Documentation version:** v8
 <!-- sdlc:auto:end overview -->
 
 ## Contents
@@ -23,7 +23,7 @@ Out of scope: reminders, history views, stats, sharing, editing past days.
 |---|---|
 | [Requirements](requirements/README.md) | v1 approved |
 | [Architecture](architecture/README.md) | 16 entries |
-| [Development](development/README.md) | 10 entries |
+| [Development](development/README.md) | 7 entries |
 | [Testing](testing/README.md) | 3 entries |
 | [Deployment](deployment/README.md) | 3 entries |
 | [Maintenance](maintenance/README.md) | 0 entries |
@@ -34,10 +34,10 @@ Out of scope: reminders, history views, stats, sharing, editing past days.
 | [Developer guide](development/developer-guide.md) | generated |
 | [API reference](development/api-reference.md) | 6 routes |
 | [Test report](testing/test-report.md) | passed |
-| [Tests](testing/test-cases.md) | 69 tests |
+| [Tests](testing/test-cases.md) | 98 tests |
 | [Deployment guide](deployment/deployment-guide.md) | deployed |
 | [Runbook](deployment/runbook.md) | deployed |
 | [Release notes](deployment/release-notes.md) | 2 releases |
 | [Traceability matrix](traceability-matrix.md) | 11 requirements |
-| [Changelog](CHANGELOG.md) | 7 versions |
+| [Changelog](CHANGELOG.md) | 8 versions |
 <!-- sdlc:auto:end contents -->
