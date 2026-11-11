@@ -15,13 +15,13 @@ Passed: 1 · Failed: 0 · Skipped: 0 · Flaky: 0 · Total: 1
 <!-- sdlc:auto:end e2e -->
 
 <!-- sdlc:auto:start unit -->
-**Coverage:** —
+**Coverage:** backend 75.4% · frontend 80.8%
 
-**Test cases:** — / — written
+**Test cases:** 0 / 78 written
 
-**Lines written:** —
+**Lines written:** 0
 
-**Files deferred:** —
+**Files deferred:** 0
 <!-- sdlc:auto:end unit -->
 
 <!-- sdlc:auto:start dev-checks -->

@@ -3,6 +3,17 @@
 > Maintained by QuorQ AI SDLC. Text between `sdlc:auto` markers is regenerated; anything outside them is yours and is kept.
 
 <!-- sdlc:auto:start releases -->
+## 9dd2e5e20d01 — 2026-11-11
+
+**Commit:** `9dd2e5e`
+
+**Delivered:**
+- US-003: Each user sees only their own habits
+- US-004: Add a habit
+- US-005: Delete a habit
+- US-007: Mark a habit done with one tap and undo with a second
+- US-008: See the current streak next to each habit
+
 ## d43179e8fd4b — 2026-11-11
 
 **Commit:** `d43179e`

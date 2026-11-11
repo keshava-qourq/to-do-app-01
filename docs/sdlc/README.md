@@ -13,7 +13,7 @@ Build a very basic habit tracker web app.
  
 Out of scope: reminders, history views, stats, sharing, editing past days.
 
-**Documentation version:** v8
+**Documentation version:** v9
 <!-- sdlc:auto:end overview -->
 
 ## Contents
@@ -25,7 +25,7 @@ Out of scope: reminders, history views, stats, sharing, editing past days.
 | [Architecture](architecture/README.md) | 16 entries |
 | [Development](development/README.md) | 7 entries |
 | [Testing](testing/README.md) | 3 entries |
-| [Deployment](deployment/README.md) | 3 entries |
+| [Deployment](deployment/README.md) | 1 entry |
 | [Maintenance](maintenance/README.md) | 0 entries |
 | [Data model](architecture/data-model.md) | generated |
 | [API (OpenAPI)](architecture/api/openapi.yaml) | generated |
@@ -37,7 +37,7 @@ Out of scope: reminders, history views, stats, sharing, editing past days.
 | [Tests](testing/test-cases.md) | 98 tests |
 | [Deployment guide](deployment/deployment-guide.md) | deployed |
 | [Runbook](deployment/runbook.md) | deployed |
-| [Release notes](deployment/release-notes.md) | 2 releases |
+| [Release notes](deployment/release-notes.md) | 3 releases |
 | [Traceability matrix](traceability-matrix.md) | 11 requirements |
-| [Changelog](CHANGELOG.md) | 8 versions |
+| [Changelog](CHANGELOG.md) | 9 versions |
 <!-- sdlc:auto:end contents -->
